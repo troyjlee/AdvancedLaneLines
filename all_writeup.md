@@ -251,9 +251,9 @@ Here's a [link to my video result](./project_annotated.mp4).  The program used t
 
 We had to modify our pipeline to work well on the video.  With the original pipeline we developed for individual images, the detection of the right striped line in the video was not very consistent, especially when there was not a stripe at the bottom of the image close to the car.
 
-To improve the detection of the striped line, we did the following.  We first generated a fit to the right line, which we were able to consistently pick up.  We then searched for the bottom of the right hand line.  If we could not find the bottom of the right hand lane, we assumed it's x-coordinate was 724 (the approximate lane width) plus the bottom of the left hand lane.
+To improve the detection of the striped line, we did the following.  We first generated a fit to the left line, which we were able to consistently pick up.  We then searched for the bottom of the right line.  If we could not find the bottom of the right hand lane, we assumed it's x-coordinate was 724 (the approximate lane width) plus the bottom of the left hand lane.
 
-We then used the fit of the left hand lane to create a "tube" around the expected position of the right hand lane.  We created a mask to zero out the image outside of this tube.  Within this tube, we did a hls transform and looked at the lightness channel L.  We then did a hard threshold to zero out pixels whose L value was less than 200.  This process picked up more of the white striped line, especially in the distance, than our modified saturation color transform described earlier.  
+We then used the fit of the left hand lane to create a "tube" around the expected position of the right hand lane.  We created a mask to zero out the image outside of this tube.  Within this tube, we did a HLS transform and looked at the lightness channel L.  We then did a hard threshold to zero out pixels whose L value was less than 200.  This process picked up more of the white striped line, especially in the distance, than our modified saturation color transform described earlier.  
 
 We this modification we were able to detect both the left and right lane lines quite well in almost every individual frame, and no averaging over previous frames was needed.
 
